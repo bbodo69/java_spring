@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+	>
+	
+	<!-- 빈클래스가 호출 가능하게 컨트롤러에 세팅
+		HelloBean hello = new HelloBean(); 아래 빈 만든것이 클래스 만든 이것과 동일 -->
+		
+	<!--  	
+	<bean id = "hello" class="test.spring.bean.HelloBean" />
+	<bean id = "test" class="test.spring.bean.TestBean" />
+	-->
+	
+	<!-- 특정 패키지 안의 클래스들을 스캔하고, Annotation을 확인후 bean 인스턴스를 생성 -->
+	<context:component-scan base-package="test" />
+	
+	<!-- 다운로드 빈 클래스 세팅 
+		컴파일 순서상 다운로드가 최우선 순위여야함 (서비스 할때 필요요소 미리 다운 받게)
+		다운로드는 다운받는 창 별도로 만들것이다. 다운로드만 하고 페이지 이동 없음
+		BeanNameViewResolver 는 새로운 창을 구성할때 우선순위를 주기위해 사용.
+		지정하지 않으면 이동 먼저 처리하려함.
+		<property> view에 대한 우선순위를 지정하는 옵션
+		다운로드는 페이지 이동전에 다운로드 창이 뜨게 하기 위해, 반두시 우선순위 0(최우선)으로 지정하고,
+		view 를 담당하는 viewResolver에는 0보다 우선순위가 낮은 1을 지정.
+	-->
+	<bean id="fileDown" class="test.spring.bean.DownloadView" />
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name = "order" value="0" /> <!-- viewResolvr 클래스와 비교해서 우선순위 지정 필요  -->
+	</bean>
+
+	<!-- bean 태그 : 객체 생성 태그. jsp:useBean과 비슷,
+				       차이점 useBean은 기본생성자만 호출하여 생성.
+				   bean은 매개 변수있는 생성자 호출 가능.
+	 -->
+	<bean id="day" class="java.util.Date" />
+	<!-- <jsp.userBean id="day" class="java.util.Data" /> -->
+	<bean id="dto" class="test.spring.model.testDTO" >
+	<!-- dto: new testDTO(); dto.setId("spring"); dto.getPw("1234") 
+			name="id" ==> setId() / value : 기본형 (문자, 숫자)
+			ref : 참조형 (레퍼런스타입 == 객체)
+	-->
+		<property name="id" value="spring" />
+		<property name="pw" value="1234" />
+		<property name="reg" ref="day"></property>
+	
+	</bean>
+	
+	<bean id="dto2" class="test.spring.model.testDTO" >
+		<!-- 생성자 매개변수 를 던저 주는것, 생성자 순서대로 나열 -->
+		<constructor-arg value="testID"/>
+		<constructor-arg ref="day" />
+		<constructor-arg value="3878" />
+	</bean>
+	
+	<!--  
+	ex) DTO
+	public class DTO{
+		private String id;
+		private String pw;
+		....
+		public DTO(){}
+		public DTO(String id, String pw){....}
+		
+		@ConstructorProperties({"url", "play", "long", "int"})
+		public DTO(String url, boolean play, long num1, int num2){...}			
+	}
+	
+	
+	-->
+	
+	<!-- index : 0부터시작 , DTO 파일에서 클래스 선언 된 index 를 참조한다.-->
+	<!-- 
+	<bean id="dto3" class="test.spring.model.testDTO">
+		<constructor-arg index="2" value="day" />
+		<constructor-arg index="1" value="1234" />	
+		<constructor-arg index="0" value="TestID" />
+	</bean>
+	-->
+	<!-- type :  -->
+	<!-- 
+	<bean id = "dto3" class="test.spring.model.DTO">
+		<constructor-arg type="java.lang.String" value="http://naver.com" />
+		<constructor-arg type="boolean" value="ture" />
+		<constructor-arg type="long" value="100" />
+		<constructor-arg type="int" value="10" />		
+	</bean>
+	 -->
+	<!-- name : 단, 컴파일 시 반드시 디버그 플래그 활성화 되어있는 상태로 .class 파일이 생성되야 하고
+				(아니면 파라미터 이름 손실되 매핑 앋뇜)
+				비활성화 상태로 실행하고자 할때는 생성자에 @ConstructorProperties 어노테이션을 추가해야함.
+	 -->
+	 
+	 <!--
+	<bean id = "dto3" class="test.spring.model.DTO">
+		<constructor-arg name="url" value="http://naver.com" />
+		<constructor-arg name="play" value="ture" />
+		<constructor-arg name="num1" value="100" />
+		<constructor-arg name="num2" value="10" />		
+	</bean>
+	
+	 -->
+	
+	<!-- ViewResolver 세팅
+			prefix : 접두어
+			suffix : 접미어 
+	
+	 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"	/>
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />  <!-- 지정 안해주면 다운로드 받을시 에러남. -->
+	</bean>
+	
+	<!-- 파일업로드 : -1은 업로드 크기 제한 없음. KB 기준 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />
+		<property name="defaultEncoding" value="UTF-8" />			
+	</bean>
+	
+	<!-- mybatis 세팅 -->
+	<!-- dataSource : DB 데이터 소스 
+		DB 커넧ㄴ 정보 DataSource 타입
+	-->
+	
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@192.168.0.252:1521:orcl"
+		p:username="java13"
+		p:password="java13"
+	/>
+	<!-- p:url="jdbc:oracle:thin:@nullmaster.iptime.org:3000:orcl"  -->	
+	
+	<!-- 커넥션 풀 역할
+		DB 연결 정보 : dataSource, 매퍼위치와 typeAlias에 대한 정보 : mybatis-config.xml에 설정할 것임.
+		커넥션 connection == session 
+		 -->
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/mybatis/mybatis-config.xml" />
+	</bean>
+	
+	<!-- sql문 날릴때 필요한 구문
+		@Autowired 해서 아래 빈을 가져다 사용하게 됨
+		destroy-method="clearCache" : 종료시 무엇을 할지 지정하는 속성. , 대용량 처리 속도가 빠름.
+	 -->
+	<bean id = "sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache" >
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>	
+		
+	
+</beans>

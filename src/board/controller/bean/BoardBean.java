@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import board.model.dao.BoardDAOImpl;
+import board.model.dao.Test;
 import board.model.vo.BoardVO;
 
 @Controller
@@ -33,7 +34,8 @@ public class BoardBean {
 		int number = 0;
 		
 		List articleList = null;
-		count = boardDAO.getArticleCount();
+		count = boardDAO.getArticleCount();	
+		System.out.println(count+"bean");
 		if(count > 0) {
 			articleList = boardDAO.getArticles(startRow, endRow);
 		}else {
@@ -124,6 +126,7 @@ public class BoardBean {
 	public String modifyForm(BoardVO vo, Model md) throws Exception {
 		
 		BoardVO list = (BoardVO)boardDAO.getArticle(vo.getNum());
+		
 		md.addAttribute("list", list);		
 		
 		return "board/modifyForm";
@@ -134,9 +137,24 @@ public class BoardBean {
 		
 		System.out.println("1111");
 		int check = boardDAO.updateArticle(vo);
+		System.out.println("2222");
 		System.out.println(check + " = check Bean");
 		md.addAttribute("check", check);
 		
 		return "board/modifyPro";
 	}
+	
+	@RequestMapping("setRef.do")
+	public String setRef() throws Exception {
+		
+		
+		Test set = new Test();
+	
+		
+		set.setRef();
+		
+		return "board/setRef";
+	}
+	
+	
 }

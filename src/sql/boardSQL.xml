@@ -7,7 +7,7 @@
   <mapper namespace="board">
   
   	<select id = "countAll" resultType="int">
-  		select count(*) from springBoard
+  		select count(*) from springboard
   	</select>
   
   	<select id = "selectAll" parameterType="hashmap" resultType="boardVO">
@@ -43,7 +43,13 @@
   	</update>
   	
   	<update id="updateArticle" parameterType="boardVO">
-  		update springboard set (writer, subject, email, content) = (#{writer}, #{subject}, #{email}, #{content}) where num = #{num} and pw = #{pw}
+  		update springboard set writer=#{writer}, subject=#{subject}, email=#{email}, content=#{content} where num=#{num}
   	</update>
+  	
+  	<update id="setRef" parameterType="int">
+  		update springboard set ref=#{i} where num=#{i}
+  	</update>
+  	
+  	
   
   </mapper>

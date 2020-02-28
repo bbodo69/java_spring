@@ -45,6 +45,8 @@ public class MemberDAOImpl implements MemberDAO{
 
 	@Override
 	public void updateMember(MemberVO vo) throws Exception {
+		System.out.println("DAOImple");
+		sqlSession.update("updateMember", vo);
 		
 		
 	}

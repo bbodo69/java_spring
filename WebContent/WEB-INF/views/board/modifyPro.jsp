@@ -9,7 +9,7 @@
 </head>	
 	<c:if test="${check == 1 }">
 		<script>
-			location.href="/web/board/list.dw";			
+			location.href="/spring/board/list.do";			
 		</script>
 	</c:if>
 	<c:if test="${check != 1 }">

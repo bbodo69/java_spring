@@ -20,7 +20,7 @@ public class AopBean {
 		tv.power();
 		tv.channel();
 		
-		return "aop/testAOP";
+		return "aop/aopMember/testAOP";
 	}
 	
 	// ..../aop/main2.do?id=123123123          ==> 변수 설정해서 넣어줌
@@ -38,7 +38,7 @@ public class AopBean {
 		System.out.println("main3");
 		// System.out.println(0/0);		
 		// main100();
-		return "aop/testAOP";
+		return "aop/aopMember/testAOP";
 	}
 	
 	public void main100() {		

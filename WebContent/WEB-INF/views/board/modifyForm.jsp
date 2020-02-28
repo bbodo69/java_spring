@@ -9,9 +9,9 @@
 <body>
 	<br />
 	<h1 align="center"> 글 수정 </h1>
-	<form action="/spring/board/modifyPro.do?pageNum=${pageNum}" method="post">
+	<form action="/spring/board/modifyPro.do" method="post">
 		<%-- 숨겨서 글 속성에 관련된 데이터 전송 --%>
-		<input type="hidden" name="num" value="${num}" />
+		<input type="hidden" name="num" value="${list.num}" />
 		<table>
 			<tr>
 				<td> 작성자 </td>

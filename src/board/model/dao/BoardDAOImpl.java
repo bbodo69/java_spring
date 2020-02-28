@@ -24,8 +24,10 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public int getArticleCount() throws Exception {
-	
+		
+		System.out.println("BoardDAO");
 		int count = (Integer)sqlSession.selectOne("board.countAll");
+		System.out.println(count+"boardDAO");
 		
 		return count;
 	}
