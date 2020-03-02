@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 
+import member.model.dao.MemberDAO;
 import member.model.dao.MemberDAOImpl;
 import member.model.vo.MemberVO;
 
@@ -143,6 +144,27 @@ public class MemberBean {
 		//return result;
 		return new ResponseEntity<String>(result, responseHeaders, HttpStatus.CREATED);
 		// body 결과, 헤더정보, 상태정보
+	}
+	
+	@RequestMapping("modifyPro.do")
+	public String modifyPro(MemberVO vo, String pwCh, Model md) throws Exception {
+		
+		int check = 0;
+		
+		System.out.println(vo.getName() + " = vo.getName()");
+		
+		String pw = memberDAO.selectMember(vo.getId()).getPw();
+		System.out.println(pw + " = pw   /    " + pwCh + " = pwCh");
+		if(pw.equals(pwCh)) {
+			memberDAO.updateMember(vo);
+			check = 1;
+		}else {
+			check = 0;
+		}
+		System.out.println(check + " = check");
+		md.addAttribute("check", check);
+		
+		return "member/modifyPro";
 	}
 	
 }

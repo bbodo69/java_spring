@@ -19,19 +19,7 @@
 	</select>
 	
 	<update id="updateMember" parameterType="memberVO">
-		update springmember 
-				<trim prefix="set" prefixOverrides=",">
-					<if test="pw != null">
-						pw = #{pw}
-					</if>
-					<if test="email != null">
-						email = #{email}
-					</if>
-					<if test="age != null">
-						age = #{age}
-					</if>
-				</trim>
-				where id = #{id}	
+		update springmember set pw=#{pw}, email=#{email}, age=#{age} where id = #{id}				
 	</update>
 	
 	<select id="idAvailCheck" parameterType="String" resultType="int">
