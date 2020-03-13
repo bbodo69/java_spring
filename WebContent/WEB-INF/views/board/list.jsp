@@ -18,7 +18,7 @@
 	<table>
 		<tr>
 			<td><button onclick="window.location='/spring/board/writeForm.do
-				'" > 글쓰기<h4>${article.num} 왜 안나오지</h4> </button></td>
+				'" > 글쓰기<h4> 왜 안나오지</h4> </button></td>
 		</tr>
 		<tr>
 			<td align="center"> 게시글이 없습니다. </td>
@@ -64,7 +64,7 @@
 	</c:if>
 	<br />
 	<%-- 목록의 페이지 번호 뷰어 설정 --%>
-	<div align="center">
+	<div align="center" style="color:black">
 	<c:if test="${count > 0}">
 		<fmt:parseNumber var="res" value="${count/pageSize}" integerOnly="true"  />
 		<c:set var="pageCount" value="${res + (count % pageSize == 0 ? 0 : 1)}" />

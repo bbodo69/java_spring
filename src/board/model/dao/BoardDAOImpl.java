@@ -19,15 +19,41 @@ public class BoardDAOImpl implements BoardDAO{
 	public void insertArticle(BoardVO vo) throws Exception {
 		
 		sqlSession.insert("board.insertArticle", vo);
+		if(vo.getRe_step().equals(null) && !vo.getRe_step().equals("0")) {
+			sqlSession.insert("board.insertArticle", vo);
+		}else{
+			// 기존 글의 ref 받기
+			String ref = vo.getRef();	
+			String oriRe_step = sqlSession.selectOne("getRefMaxNum", ref);
+			int reRe_step = Integer.parseInt(oriRe_step)+1;
+			System.out.println(reRe_step + " = reRe_step");
+			String stringReRe_step = Integer.toString(reRe_step); 
+			System.out.println(stringReRe_step + " = stringReRe_step");
+			vo.setRe_step(stringReRe_step);
+			sqlSession.insert("board.insertReple", vo);
+			// 받은 ref 그대로 ref 에 붙여 놓고 re_step 만 +1 씩 해주기
+			
+//			System.out.println("1111");
+//			System.out.println(vo.getRef() + " = vo.getRef");
+//			int ref = vo.getNum();						
+//			System.out.println(ref + " = ref");			
+//			String oriRe_step = sqlSession.selectOne("getRefMaxNum", ref);
+//			System.out.println("2222");
+//			int reRe_step = Integer.parseInt(oriRe_step)+1;
+//			System.out.println("3333");
+//			String stringReRe_step = Integer.toString(reRe_step); 
+//			System.out.println("4444");
+//			vo.setRe_step(stringReRe_step);
+//			System.out.println(vo.getRef());
+//			sqlSession.insert("board.insertReple", vo);
+		}
 		
 	}
 
 	@Override
 	public int getArticleCount() throws Exception {
 		
-		System.out.println("BoardDAO");
 		int count = (Integer)sqlSession.selectOne("board.countAll");
-		System.out.println(count+"boardDAO");
 		
 		return count;
 	}

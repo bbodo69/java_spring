@@ -19,7 +19,10 @@ public class BoardBean {
 	// Controller -> Xxxservice(interface) -> XxxserviceImpl -> XxxDAO -> XxxDAOImple -> SQL,xml -> DB
 	@Autowired
 	private BoardDAOImpl boardDAO = null;
-		
+	
+	@Autowired
+	private Test test = null;
+			
 	@RequestMapping("list.do")
 	public String list(String pageNum, Model md) throws Exception {
 		
@@ -55,16 +58,17 @@ public class BoardBean {
 	}
 	
 	@RequestMapping("writeForm.do")
-	public String writeForm(Model md) throws Exception {
+	public String writeForm(Model md, BoardVO vo) throws Exception {
 		
 		int num = boardDAO.getArticleCount() + 1;
 		int readCount = 0;
-		System.out.println(readCount);
+		
 //		int ref = 0;
 //		int re_step = 0;
 //		int re_level = 0;
 		md.addAttribute("num", num);
 		md.addAttribute("readCount", readCount);
+		md.addAttribute("vo", vo);
 //		md.addAttribute("ref", ref);
 //		md.addAttribute("re_step", re_step);
 //		md.addAttribute("re_level", re_level);
@@ -80,9 +84,7 @@ public class BoardBean {
 	@RequestMapping("writePro.do")
 	public String writePro(BoardVO vo) throws Exception {
 		
-		System.out.println("writePro.do");
 		boardDAO.insertArticle(vo);
-		System.out.println("1111");
 		return "board/writePro";
 	}
 	
@@ -135,23 +137,17 @@ public class BoardBean {
 	@RequestMapping("modifyPro.do")
 	public String modifyPro(BoardVO vo, Model md) throws Exception {
 		
-		System.out.println("1111");
 		int check = boardDAO.updateArticle(vo);
-		System.out.println("2222");
-		System.out.println(check + " = check Bean");
 		md.addAttribute("check", check);
 		
 		return "board/modifyPro";
 	}
 	
+	
 	@RequestMapping("setRef.do")
 	public String setRef() throws Exception {
-		
-		
-		Test set = new Test();
-	
-		
-		set.setRef();
+		 		
+		test.setRef();
 		
 		return "board/setRef";
 	}

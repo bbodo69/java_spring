@@ -23,7 +23,7 @@
   	<insert id="insertArticle" parameterType="boardVO">
   		insert into springBoard values(springboard_seq.nextval, #{writer}, #{subject},
   										 #{email}, #{content}, #{pw}, sysdate,
-  										 #{readCount}, #{ref}, #{re_step}, #{re_level} )
+  										 #{readCount}, springboard_seq.currval, 0, #{re_level} )
   	</insert>
   	
   	<select id="getArticle" parameterType="int" resultType="boardVO">
@@ -47,9 +47,21 @@
   	</update>
   	
   	<update id="setRef" parameterType="int">
-  		update springboard set ref=#{i} where num=#{i}
+  		update springboard set ref = #{i}, re_step=0 where num=#{i}
   	</update>
   	
+  	<select id="selectAllNum" resultType="int">
+  		select num from springboard
+  	</select>
   	
+ 	<select id="getRefMaxNum" resultType="int" parameterType="int">
+ 		select max(re_step) from springmember where ref = #{ref}
+ 	</select>
+  	
+  	<insert id="insertReple" parameterType="boardVO">
+  		insert into springBoard values(springboard_seq.nextval, #{writer}, #{subject},
+  										 #{email}, #{content}, #{pw}, sysdate,
+  										 #{readCount}, #{ref}, #{re_step}, #{re_level} )
+  	</insert>
   
   </mapper>

@@ -12,6 +12,10 @@
 	<bean id="boardDAO" class="board.model.dao.BoardDAOImpl">
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
+	
+	<bean id="test"	class="board.model.dao.Test">
+		<property name="sqlSession" ref="sqlSession" />		
+	</bean>
 
 	<context:component-scan base-package="board.controller.bean" />
 	

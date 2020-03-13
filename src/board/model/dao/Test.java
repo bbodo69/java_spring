@@ -14,21 +14,16 @@ public class Test {
 	}
 	
 	public void setRef() throws Exception {
-
-		int count = sqlSession.selectOne("board.countAll");
+				
+		List list = sqlSession.selectList("board.selectAllNum");
 		
-		BoardDAO dao = new boardDAO();
-		List list = dao.getArticles(0, count);
-		BoardVO vo = new BoardVO();
-		
-		for(int i = 0 ; i < count ; i++) {
-			vo = (BoardVO)list[i];
+		for(int i = 0 ; i < list.size() ; i ++) {
+			System.out.println(i + " = i");
+			System.out.println(list.get(i) + " list.get(i)");
+			int num = (Integer)list.get(i);
+			sqlSession.update("board.setRef", num);
 		}
-			
-		
+						
 		}
-		
 	
 	}
-	
-

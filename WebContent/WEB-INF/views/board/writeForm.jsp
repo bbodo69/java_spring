@@ -14,14 +14,14 @@
 	<form action="/spring/board/writePro.do" method="post">
 		<%-- 숨겨서 글 속성에 관련된 데이터 전송 --%>
 		<input type="hidden" name="num" value="${num}" />
-		<input type="hidden" name="ref" value="${ref}" />
+		<input type="hidden" name="ref" value="${vo.ref}" />
 		<input type="hidden" name="re_step" value="${re_step}" />
 		<input type="hidden" name="re_level" value="${re_level}" />
 		<input type="hidden" name="readCount" value="${readCount}" />
 		<table>
 			<tr>
 				<td> 작성자 </td>
-				<td align="left"> <input type="text" name="writer" /><h4>num${num }</h4><h4>ref${ref }</h4><h4>${re_step }</h4><h4>${re_level }</h4><h4>readCount${readCount }</h4> </td>
+				<td align="left"> <input type="text" name="writer" /><h4>articlecount = ${num }</h4><h4>ref${ref }</h4><h4>${re_step }</h4><h4>${re_level }</h4><h4>readCount${readCount }</h4> </td>
 			</tr>
 			<tr>
 				<td> 제   목 </td>

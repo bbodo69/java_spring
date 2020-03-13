@@ -31,7 +31,7 @@
 				<button onclick="window.location='/spring/board/modifyForm.do?num=${list.num}&pageNum=${pageNum}'">수   정</button>
 				<button onclick="window.location='/spring/board/deleteForm.do?num=${list.num}&pageNum=${pageNum}'">삭   제</button>
 				<%-- 답글버튼처리 : num,ref,re_step,re_level DB에서 받은정보 보내주면서 이동 --%>
-				<button onclick="window.location='/spring/board/WriteForm.do?num=${list.num}&ref=${list.ref}&re_step=${list.re_step}&re_level=${list.re_level}'">답   글</button>
+				<button onclick="window.location='/spring/board/writeForm.do?num=${list.num}&ref=${list.ref}&re_step=${list.re_step}&re_level=${list.re_level}'">답   글</button>
 				<button onclick="window.location='/spring/board/list.do?pageNum=${pageNum}'" >리스트</button>
 			</td>
 		</tr>

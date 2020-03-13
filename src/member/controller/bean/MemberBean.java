@@ -150,18 +150,14 @@ public class MemberBean {
 	public String modifyPro(MemberVO vo, String pwCh, Model md) throws Exception {
 		
 		int check = 0;
-		
-		System.out.println(vo.getName() + " = vo.getName()");
-		
-		String pw = memberDAO.selectMember(vo.getId()).getPw();
-		System.out.println(pw + " = pw   /    " + pwCh + " = pwCh");
+				
+		String pw = memberDAO.selectMember(vo.getId()).getPw();	
 		if(pw.equals(pwCh)) {
 			memberDAO.updateMember(vo);
 			check = 1;
 		}else {
 			check = 0;
-		}
-		System.out.println(check + " = check");
+		}	
 		md.addAttribute("check", check);
 		
 		return "member/modifyPro";
